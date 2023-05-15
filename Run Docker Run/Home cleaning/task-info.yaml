@@ -104,6 +104,20 @@ files:
     if __name__ == '__main__':
         DockerTest().run_tests()
   learner_created: false
+- name: docker_run.bash
+  visible: true
+  text: |
+    #!/usr/bin/env bash
+
+    docker run -d --name hyper-web-app -p 8000:8000 hyper-web-app
+  learner_created: true
+- name: cleanup.bash
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/346/stages/2038/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Mon, 15 May 2023 10:45:35 UTC"
 record: -1

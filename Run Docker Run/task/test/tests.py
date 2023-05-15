@@ -1,12 +1,9 @@
-from pathlib import Path
-
 import docker
 from hstest import StageTest, dynamic_test, CheckResult
 
-stage = Path(__file__).parent.parent
+ancestor = "hyper-web-app"
 
-project_images = ["python:3.11-slim", "hyper-web-app"]
-
+project_images = ["hyper-web-app"]
 
 class DockerTest(StageTest):
 
@@ -16,17 +13,22 @@ class DockerTest(StageTest):
         self.client = docker.from_env()
 
     @dynamic_test()
-    def test1(self):
-        print('DockerRootDir ' + self.client.info().get('DockerRootDir'))
-        images_docker = self.client.images.list(all=True)
-        for image in images_docker:
-            print('images in the docker ' + str(image.tags))
-        """Tests if image exists in the system"""
+    def test2(self):
+        """Tests if the container is deleted"""
+        all_containers = self.client.containers.list(all=True)
+        for container in all_containers:
+            if container.attrs.get("Config").get("Image") == ancestor:
+                return CheckResult.wrong(f"You should delete the container for the ancestor '{ancestor}'!")
+
+        return CheckResult.correct()
+
+    @dynamic_test()
+    def test3(self):
+        """Tests if the image is removed from the system"""
         images_text = " ".join([str(image) for image in self.client.images.list()])
-        print('images_text ' + images_text)
         for image in project_images:
-            if image not in images_text:
-                return CheckResult.wrong(f"'{image}' not found in the system images!")
+            if image in images_text:
+                return CheckResult.wrong(f"You should delete the image '{image}'!")
 
         return CheckResult.correct()
 

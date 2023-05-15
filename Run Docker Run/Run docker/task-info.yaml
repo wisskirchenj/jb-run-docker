@@ -114,6 +114,12 @@ files:
     if __name__ == '__main__':
         DockerTest().run_tests()
   learner_created: false
+- name: docker_run.bash
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/346/stages/2037/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 15 May 2023 10:25:21 UTC"
+record: 4
